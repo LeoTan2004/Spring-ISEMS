@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csb.mapper.UserMonitorMapper">
+
+    <resultMap id="BaseResultMap" type="com.csb.pojo.UserMonitor">
+            <result property="relUid" column="rel_uid" jdbcType="BIGINT"/>
+            <result property="relMid" column="rel_mid" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        rel_uid,rel_mid
+    </sql>
+    <sql id="tableName">t_user_monitor</sql>
+    <delete id="deleteByRelMidAndRelUid">
+        delete from <include refid="tableName"/>
+        <where>
+            rel_uid = #{uid}
+            and
+            rel_mid = #{mid}
+        </where>
+    </delete>
+    <select id="getByUid" resultType="com.csb.pojo.UserMonitor">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_uid = #{uid}
+        </where>
+        limit #{offset},500
+    </select>
+    <select id="getByMid" resultType="com.csb.pojo.UserMonitor">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_mid = #{mid}
+        </where>
+        limit #{offset},500
+    </select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csb.mapper.TeamUsersMapper">
+
+    <resultMap id="BaseResultMap" type="com.csb.pojo.TeamUsers">
+            <result property="time" column="time" jdbcType="TIMESTAMP"/>
+            <result property="relUid" column="rel_uid" jdbcType="BIGINT"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="relTid" column="rel_tid" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        time,rel_uid,description,
+        rel_tid,status
+    </sql>
+    <sql id="tableName">t_team_users</sql>
+    <delete id="deleteOb">
+        delete from <include refid="tableName"/>
+        <where>
+            rel_tid = #{relTid}
+            and
+            rel_uid = #{relUid}
+        </where>
+    </delete>
+    <select id="getAllByUid" resultType="com.csb.pojo.TeamUsers">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_uid = #{uid}
+            and
+            status = #{status}
+        </where>
+        limit #{offset},500
+    </select>
+    <select id="getAllByTid" resultType="com.csb.pojo.TeamUsers">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_tid = #{tid}
+        </where>
+        limit #{offset},500
+    </select>
+    <select id="getByRelTidAndRelUidTeamUsers" resultType="com.csb.pojo.TeamUsers">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_tid = #{tid}
+            and
+            rel_uid = #{uid}
+        </where>
+        limit 1
+    </select>
+    <select id="getAllByTidAndStatus" resultType="com.csb.pojo.TeamUsers">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_tid = #{tid}
+            and
+            status = #{status}
+        </where>
+        limit #{offset},500
+    </select>
+    <select id="getAllByUidAndStatus" resultType="com.csb.pojo.TeamUsers">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_uid = #{uid}
+            and
+            status = #{status}
+        </where>
+        limit #{offset},500
+    </select>
+</mapper>
