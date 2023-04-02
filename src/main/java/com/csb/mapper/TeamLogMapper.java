@@ -1,7 +1,6 @@
 package com.csb.mapper;
 
-
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.csb.pojo.TeamLog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,7 +30,7 @@ public interface TeamLogMapper extends BaseMapper<TeamLog> {
 
     void dropTable(@Param("tid") long teamId);
 
-    Integer insert(TeamLog entity);
+    int insert(TeamLog entity);
 
 }
 

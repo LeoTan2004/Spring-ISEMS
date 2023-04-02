@@ -1,6 +1,6 @@
 package com.csb.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.csb.mapper.RoleMapper;
 import com.csb.pojo.Role;
 import com.csb.pojo.Team;
@@ -31,12 +31,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
 
     @Override
     public Role getById(Long id) {
-        return this.selectById(id);
+        return this.getById(id);
     }
 
     @Override
     public boolean delRole(Role role) {
-        return this.deleteById(role.getRid());
+        return this.removeById(role.getRid());
     }
 
     @Override

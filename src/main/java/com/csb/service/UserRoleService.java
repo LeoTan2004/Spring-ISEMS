@@ -1,6 +1,6 @@
 package com.csb.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.csb.pojo.Role;
 import com.csb.pojo.User;
 import com.csb.pojo.UserRole;

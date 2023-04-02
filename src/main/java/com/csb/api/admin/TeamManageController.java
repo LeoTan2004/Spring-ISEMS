@@ -146,7 +146,7 @@ public class TeamManageController {
         switch (turn) {
             case 1 -> {//open
                 monitor.setRelTid(tid);
-                return monitorService.insert(monitor) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
+                return monitorService.save(monitor) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
             }
             case -1 -> {//close
                 monitor.setRelTid(-1L);

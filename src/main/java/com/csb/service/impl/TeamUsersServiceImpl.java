@@ -1,6 +1,6 @@
 package com.csb.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.csb.mapper.TeamUsersMapper;
 import com.csb.pojo.Status;
 import com.csb.pojo.Team;

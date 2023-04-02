@@ -1,6 +1,6 @@
 package com.csb.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.csb.mapper.TeamMapper;
 import com.csb.pojo.Team;
 import com.csb.pojo.User;
@@ -23,7 +23,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
 
     @Override
     public Team getById(Long id) {
-        return this.selectById(id);
+        return this.getById(id);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
 
     @Override
     public boolean delTeam(Team team) {
-        return this.deleteById(team.getTid());
+        return this.removeById(team.getTid());
     }
 
     @Override
