@@ -28,7 +28,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public User loginWithPassword(UserParam userParam) {
         String username = userParam.getUsername();
         String password = userParam.getPassword();
-        if (Asset.isNull(username)||Asset.isNull(password)){
+        if (Asset.isNull(username) || Asset.isNull(password)) {
             return null;
         }
         User user = userMapper.getByUsernameAndPassword(username, password);
@@ -58,7 +58,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public boolean register(UserParam userParam) {
         // TODO 根据不同方式验证
-        return false;
+        User user = new User();
+        return 1 == userMapper.insert(user);
     }
 
     @Override
