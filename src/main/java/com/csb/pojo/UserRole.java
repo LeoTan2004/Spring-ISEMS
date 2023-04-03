@@ -1,17 +1,14 @@
 package com.csb.pojo;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- * 
- * @TableName t_user_role
- */
+
 @TableName(value ="t_user_role")
 @Data
 @NoArgsConstructor

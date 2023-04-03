@@ -1,7 +1,7 @@
 package com.csb.pojo;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 
- * @TableName t_team_log
- */
+
 //@TableName(value ="t_team_log")
 @Data
 @NoArgsConstructor

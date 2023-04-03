@@ -2,7 +2,7 @@ package com.csb.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.csb.mapper.TeamUsersMapper;
-import com.csb.pojo.Status;
+import com.csb.dto.Status;
 import com.csb.pojo.Team;
 import com.csb.pojo.TeamUsers;
 import com.csb.pojo.User;
@@ -28,15 +28,11 @@ public class TeamUsersServiceImpl extends ServiceImpl<TeamUsersMapper, TeamUsers
 
     @Override
     public boolean addTeamUser(Team team, User user, String description) {
-        long uid = user.getUid();
-        long tid = team.getTid();
         return mapper.insert(new TeamUsers(Status.IN_TEAM,new Date(), user.getUid(), description, team.getTid())) == 1;
     }
 
     @Override
     public boolean applyToTeam(Team team, User user, String description) {
-        long uid = user.getUid();
-        long tid = team.getTid();
         return mapper.insert(new TeamUsers(Status.APPLY,new Date(), user.getUid(), description, team.getTid())) == 1;
     }
 

@@ -4,10 +4,12 @@ spring:
     password: root
     url: jdbc:mysql://localhost:3306/csb?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml
+#mybatis:
+#  mapper-locations: classpath:mapper/*Mapper.xml
 server:
   servlet:
     session:
       cookie:
         http-only: false
+#mybatis-plus:
+#  mapper-locations: classpath*:com/csb/mapper/*Mapper.xml

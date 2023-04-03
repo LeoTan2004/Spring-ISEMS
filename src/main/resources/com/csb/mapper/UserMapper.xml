@@ -17,6 +17,21 @@
         nickname,description
     </sql>
     <sql id="tableName">t_user</sql>
+<!--    <update id="updateById">-->
+<!--        update <include refid="tableName"/>-->
+<!--        <set>-->
+<!--            username = #{username},-->
+<!--            nickname = #{nickname},-->
+<!--            description = #{description}-->
+<!--        </set>-->
+<!--        <where>-->
+<!--            uid = #{uid}-->
+<!--        </where>-->
+<!--    </update>-->
+<!--    <insert id="insert">-->
+<!--        insert into <include refid="tableName"/>-->
+<!--        (uid,username,nickname,description) values(#{uid},#{username},#{nickname},#{description});-->
+<!--    </insert>-->
     <select id="getByUsername" resultType="com.csb.pojo.User">
         select <include refid="Base_Column_List"/>
         from <include refid="tableName"/>
