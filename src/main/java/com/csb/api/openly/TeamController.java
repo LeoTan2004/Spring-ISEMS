@@ -6,7 +6,7 @@ import com.csb.service.*;
 import com.csb.utils.Asset;
 import com.csb.utils.AuthorityCheck;
 import com.csb.vo.MSG;
-import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +22,7 @@ import java.util.List;
  * 可以查询小组的基本信息
  */
 @RestController
+@Slf4j
 @RequestMapping("/team")
 @Scope("session")
 public class TeamController {
@@ -75,5 +76,15 @@ public class TeamController {
             return MSG.ILLEAGAL_PARAM;
         }
         return teamUsersService.delTeamUser(byId, curUser) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
+    }
+
+    @PostMapping("/newTeam")
+    public MSG addTeam(String teamName){
+        User curUser = authorityCheck.getCurUser();
+        if (Asset.isNull(curUser)){
+            return MSG.ILLEAGAL_AUTH;
+        }
+        Team team = new Team(null, teamName, teamName, curUser.getUid());
+        return teamService.addTeam(team)?MSG.SUCESS_EMP:MSG.FAIL_EMP;
     }
 }

@@ -23,7 +23,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
 
     @Override
     public Team getById(Long id) {
-        return this.getById(id);
+        return teamMapper.selectById(id);
     }
 
     @Override

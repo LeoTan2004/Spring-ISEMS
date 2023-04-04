@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
@@ -37,6 +38,8 @@ public class Team implements Serializable {
      */
     private Long teamAdmin;
 
+
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -71,16 +74,14 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", tid=").append(tid);
-        sb.append(", logTablename=").append(logTablename);
-        sb.append(", teamname=").append(teamname);
-        sb.append(", teamAdmin=").append(teamAdmin);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", tid=" + tid +
+                ", logTablename=" + logTablename +
+                ", teamname=" + teamname +
+                ", teamAdmin=" + teamAdmin +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
     }
 }

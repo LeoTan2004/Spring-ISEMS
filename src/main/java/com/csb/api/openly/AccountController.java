@@ -8,15 +8,19 @@ import com.csb.utils.Asset;
 import com.csb.utils.AuthorityCheck;
 import com.csb.vo.MSG;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 可以修改用户描述
  * 可以修改用户密码
  */
 @RestController
+@Slf4j
 @RequestMapping("/account")
 @Scope("session")
 public class AccountController {
@@ -43,10 +47,13 @@ public class AccountController {
     AuthorityCheck authorityCheck;
 
 
-    @PostMapping("/description")
-    public MSG setDescription(String description) {
+    @PostMapping("/introduce")
+    public MSG setDescription(String introduction) {
         User curUser = authorityCheck.getCurUser();
-        curUser.setDescription(description);
+        if (Asset.isNull(curUser)){
+            return MSG.ILLEAGAL_AUTH;
+        }
+        curUser.setIntroduction(introduction);
         return userService.updateById(curUser) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
 
     }
@@ -88,7 +95,7 @@ public class AccountController {
     public MSG getCurUser() {
         User curUser = authorityCheck.getCurUser();
         if (Asset.isNull(curUser)) {
-            return MSG.FAIL_EMP;
+            return MSG.ILLEAGAL_AUTH;
         }
         return new MSG(curUser);
     }

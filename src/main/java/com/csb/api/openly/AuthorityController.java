@@ -9,11 +9,16 @@ import com.csb.utils.AuthorityCheck;
 import com.csb.utils.VerifyCodeUtils;
 import com.csb.vo.MSG;
 import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -21,6 +26,7 @@ import java.io.IOException;
  * 权限控制,主要包括注册,登录,登出,修改密码等
  */
 @RestController
+@Slf4j
 @RequestMapping("/authority")
 @Scope("session")
 public class AuthorityController {
@@ -88,7 +94,17 @@ public class AuthorityController {
     }
 
     @PostMapping("/logout")
-    public MSG logout() {
+    public MSG logout(HttpServletRequest request,HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie: cookies){
+
+            cookie.setMaxAge(0);
+
+            cookie.setPath("/");
+
+            response.addCookie(cookie);
+
+        }
         authorityCheck.setCurUser(null);
         return MSG.SUCESS_EMP;
     }

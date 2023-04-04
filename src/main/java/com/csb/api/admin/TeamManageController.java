@@ -7,6 +7,7 @@ import com.csb.service.*;
 import com.csb.utils.Asset;
 import com.csb.utils.AuthorityCheck;
 import com.csb.vo.MSG;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.Objects;
  */
 
 @RestController
+@Slf4j
 @RequestMapping("/admin")
 @Scope("session")
 public class TeamManageController {
@@ -64,8 +66,6 @@ public class TeamManageController {
         if (Objects.equals(teamService.getById(relTid).getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
             return MSG.ILLEAGAL_AUTH;
         }
-        int code;
-        String msg;
         return switch (turn) {
             case 1 ->//open
                     userMonitorService.addUserMonitor(user, monitor) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
@@ -122,6 +122,9 @@ public class TeamManageController {
             return MSG.ILLEAGAL_AUTH;
         }
         User user = userService.getByUsername(userParam.getUsername());
+        if (Asset.isNull(user)){
+            return MSG.ILLEAGAL_PARAM;
+        }
         TeamUsers byTeamAndUser = teamUsersService.getByTeamAndUser(user, team);
         if (Asset.isNull(byTeamAndUser)) {
             return MSG.ILLEAGAL_PARAM;
@@ -131,7 +134,7 @@ public class TeamManageController {
     }
 
     @PostMapping("/addMonitor")
-    public MSG setMonitor(long tid, long mid, @RequestParam("switch") int turn) {
+    public MSG setMonitor( long tid, long mid, @RequestParam("switch") int turn) {
         Monitor monitor = monitorService.getById(mid);
         if (Asset.isNull(monitor)) {
             return MSG.ILLEAGAL_PARAM;
@@ -140,13 +143,13 @@ public class TeamManageController {
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
             return MSG.ILLEAGAL_AUTH;
         }
         switch (turn) {
             case 1 -> {//open
                 monitor.setRelTid(tid);
-                return monitorService.save(monitor) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
+                return monitorService.updateById(monitor) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
             }
             case -1 -> {//close
                 monitor.setRelTid(-1L);
@@ -159,12 +162,12 @@ public class TeamManageController {
     }
 
     @PostMapping("/getAllUsers")
-    public MSG getAllUsers(long tid, long offset) {
+    public MSG getAllUsers(long tid,@RequestParam(defaultValue = "0") long offset) {
         Team team = teamService.getById(tid);
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
             return MSG.ILLEAGAL_AUTH;
         }
         List<User> byTeam = userService.getByTeam(team, offset);

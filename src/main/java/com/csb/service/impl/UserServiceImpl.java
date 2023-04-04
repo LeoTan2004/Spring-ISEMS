@@ -31,8 +31,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (Asset.isNull(username) || Asset.isNull(password)) {
             return null;
         }
-        User user = userMapper.getByUsernameAndPassword(username, password);
-        return user;
+        return userMapper.getByUsernameAndPassword(username, password);
     }
 
     @Override
@@ -58,7 +57,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public boolean register(UserParam userParam) {
         // TODO 根据不同方式验证
-        User user = new User();
+        User byUsername = userMapper.getByUsername(userParam.getUsername());
+        if (byUsername != null) {
+            return false;
+        }
+        User user = new User(null, userParam.getUsername(), userParam.getPassword(), userParam.getNickname(), userParam.getDescription());
         return 1 == userMapper.insert(user);
     }
 
@@ -76,7 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (description == null) {
             return false;
         }
-        byUsername.setDescription(description);
+        byUsername.setIntroduction(description);
         return userMapper.updateById(byUsername) == 1;
     }
 

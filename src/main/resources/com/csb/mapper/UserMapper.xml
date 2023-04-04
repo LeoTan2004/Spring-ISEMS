@@ -9,29 +9,15 @@
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
             <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         uid,username,
-        nickname,description
+        nickname,introduction
     </sql>
     <sql id="tableName">t_user</sql>
-<!--    <update id="updateById">-->
-<!--        update <include refid="tableName"/>-->
-<!--        <set>-->
-<!--            username = #{username},-->
-<!--            nickname = #{nickname},-->
-<!--            description = #{description}-->
-<!--        </set>-->
-<!--        <where>-->
-<!--            uid = #{uid}-->
-<!--        </where>-->
-<!--    </update>-->
-<!--    <insert id="insert">-->
-<!--        insert into <include refid="tableName"/>-->
-<!--        (uid,username,nickname,description) values(#{uid},#{username},#{nickname},#{description});-->
-<!--    </insert>-->
+
     <select id="getByUsername" resultType="com.csb.pojo.User">
         select <include refid="Base_Column_List"/>
         from <include refid="tableName"/>
