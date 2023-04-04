@@ -57,8 +57,8 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
     }
 
     public boolean addTeam(Team team) {
-        Long tid = team.getTid();
-        team.setLogTablename(tid.toString());
+
+        team.setLogTablename("#{tid}");
         return teamMapper.insert(team) == 1;
     }
 }

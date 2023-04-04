@@ -84,7 +84,7 @@ public class TeamController {
         if (Asset.isNull(curUser)){
             return MSG.ILLEAGAL_AUTH;
         }
-        Team team = new Team(null, teamName, teamName, curUser.getUid());
+        Team team = new Team(null, null, teamName, curUser.getUid());
         return teamService.addTeam(team)?MSG.SUCESS_EMP:MSG.FAIL_EMP;
     }
 }
