@@ -48,12 +48,13 @@ public class AccountController {
 
 
     @PostMapping("/introduce")
-    public MSG setDescription(String introduction) {
+    public MSG setDescription(String introduction,String nickname) {
         User curUser = authorityCheck.getCurUser();
         if (Asset.isNull(curUser)){
             return MSG.ILLEAGAL_AUTH;
         }
         curUser.setIntroduction(introduction);
+        curUser.setNickname(nickname);
         return userService.updateById(curUser) ? MSG.SUCESS_EMP : MSG.FAIL_EMP;
 
     }

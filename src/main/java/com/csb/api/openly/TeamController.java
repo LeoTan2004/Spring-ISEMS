@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -79,12 +80,21 @@ public class TeamController {
     }
 
     @PostMapping("/newTeam")
-    public MSG addTeam(String teamName){
+    public MSG addTeam(String teamName,@RequestParam("captcha_pic") String cap){
         User curUser = authorityCheck.getCurUser();
-        if (Asset.isNull(curUser)){
+        if (!authorityCheck.checkPicCaptcha(cap)) {
             return MSG.ILLEAGAL_AUTH;
         }
         Team team = new Team(null, null, teamName, curUser.getUid());
         return teamService.addTeam(team)?MSG.SUCESS_EMP:MSG.FAIL_EMP;
+    }
+
+    @PostMapping("/getMyTeams")
+    public MSG getMyTeams(@RequestParam("offset") long offset){
+        List<Team> teams = teamService.getByUser(authorityCheck.getCurUser(), offset);
+        if (Asset.isNull(teams)){
+            return MSG.FAIL_EMP;
+        }
+        return new MSG(teams);
     }
 }

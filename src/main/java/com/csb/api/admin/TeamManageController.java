@@ -29,13 +29,6 @@ import java.util.Objects;
 @RequestMapping("/admin")
 @Scope("session")
 public class TeamManageController {
-    @PostMapping("/test")
-    public MSG test1() {
-
-        return new MSG(1, "2", "4");
-    }
-
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -63,7 +56,8 @@ public class TeamManageController {
             return MSG.ILLEAGAL_PARAM;
         }
         Long relTid = monitor.getRelTid();
-        if (Objects.equals(teamService.getById(relTid).getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        Team team = teamService.getById(relTid);
+        if (null!=team && !authorityCheck.isAdmin(team)){
             return MSG.ILLEAGAL_AUTH;
         }
         return switch (turn) {
@@ -81,7 +75,7 @@ public class TeamManageController {
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!authorityCheck.isAdmin(team)) {
             return MSG.ILLEAGAL_AUTH;
         }
         User user = userService.getById(uid);
@@ -101,7 +95,7 @@ public class TeamManageController {
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!authorityCheck.isAdmin(team)) {
             return MSG.ILLEAGAL_AUTH;
         }
         Role role = roleService.getByTeamAndName(team, roleName);
@@ -118,7 +112,7 @@ public class TeamManageController {
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!authorityCheck.isAdmin(team)) {
             return MSG.ILLEAGAL_AUTH;
         }
         User user = userService.getByUsername(userParam.getUsername());
@@ -143,7 +137,7 @@ public class TeamManageController {
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (!Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!authorityCheck.isAdmin(team)){
             return MSG.ILLEAGAL_AUTH;
         }
         switch (turn) {
@@ -167,7 +161,7 @@ public class TeamManageController {
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (!Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!authorityCheck.isAdmin(team)) {
             return MSG.ILLEAGAL_AUTH;
         }
         List<User> byTeam = userService.getByTeam(team, offset);
@@ -177,13 +171,14 @@ public class TeamManageController {
         return new MSG(1,"成功",byTeam);
     }
 
+
     @PostMapping("/setUser")
     public MSG setUser(long tid, long uid, @RequestParam("switch") int turn,@RequestParam(required = false) String description) {
         Team team = teamService.getById(tid);
         if (Asset.isNull(team)) {
             return MSG.ILLEAGAL_PARAM;
         }
-        if (Objects.equals(team.getTeamAdmin(), authorityCheck.getCurUser().getUid())) {
+        if (!authorityCheck.isAdmin(team)) {
             return MSG.ILLEAGAL_AUTH;
         }
         User user = userService.getById(uid);
@@ -202,4 +197,6 @@ public class TeamManageController {
             }
         }
     }
+
+
 }

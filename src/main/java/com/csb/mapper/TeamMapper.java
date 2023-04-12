@@ -17,7 +17,7 @@ import java.util.List;
 public interface TeamMapper extends BaseMapper<Team> {
     List<Team> getByTeamAdmin(@Param("admin") long adminId, @Param("offset")long offset);
 
-    List<Team> getByUser(@Param("uid") Long userId);
+    List<Team> getByUser(@Param("uid") Long userId,@Param("offset")long offset);
 }
 
 

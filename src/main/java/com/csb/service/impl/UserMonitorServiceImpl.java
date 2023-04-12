@@ -42,6 +42,11 @@ public class UserMonitorServiceImpl extends ServiceImpl<UserMonitorMapper, UserM
     public boolean delUserMonitor(User user, Monitor monitor) {
         return mapper.deleteByRelMidAndRelUid(monitor.getMid(), user.getUid()) == 1;
     }
+
+    @Override
+    public UserMonitor getByUserAndMonitor(User user, Monitor monitor) {
+        return mapper.getByRelMidAndRelUid(monitor.getMid(), user.getUid());
+    }
 }
 
 

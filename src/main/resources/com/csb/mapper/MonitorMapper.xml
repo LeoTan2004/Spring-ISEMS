@@ -53,4 +53,13 @@
         </where>
         limit #{offset},500
     </select>
+    <select id="getListByTid" resultType="com.csb.pojo.Monitor">
+        select mid
+        from <include refid="tableName"/>
+        <where>
+            rel_tid = #{tid}
+        </where>
+        limit #{offset},500
+    </select>
+
 </mapper>

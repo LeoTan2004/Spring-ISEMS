@@ -36,6 +36,12 @@ public class MonitorServiceImpl extends ServiceImpl<MonitorMapper, Monitor>
     public List<Monitor> getByUser(User user, long offset) {
         return monitorMapper.getByUser(user.getUid(), offset);
     }
+
+    @Override
+    public List<Monitor> getListByTeam(Team team, long offset) {
+        return monitorMapper.getListByTid(team.getTid(),offset);
+    }
+
 }
 
 

@@ -17,4 +17,7 @@ public interface MonitorService extends IService<Monitor> {
     Monitor getById(Long id);
     List<Monitor> getByTeam(Team team,long offset);
     List<Monitor> getByUser(User user,long offset);
+
+    List<Monitor> getListByTeam(Team team, long offset);
+
 }

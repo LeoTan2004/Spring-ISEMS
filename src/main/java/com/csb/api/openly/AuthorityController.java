@@ -50,6 +50,11 @@ public class AuthorityController {
     @Autowired
     AuthorityCheck authorityCheck;
 
+    @RequestMapping("/test")
+    public MSG test(){
+        return MSG.SUCESS_EMP;
+    }
+
     @PostMapping("/login")
     public MSG login(UserParam loginParam) {
         if (Asset.isNull(loginParam.getType())) {

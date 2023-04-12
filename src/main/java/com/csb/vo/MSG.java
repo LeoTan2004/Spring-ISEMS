@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MSG {
+public class  MSG {
     public static MSG ILLEAGAL_PARAM=new MSG(-2,"参数非法",null);
     public static MSG SUCESS_EMP=new MSG(1,"成功",null);
     public static MSG FAIL_EMP=new MSG(0,"失败",null);

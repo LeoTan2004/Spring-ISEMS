@@ -37,4 +37,14 @@
         </where>
         limit #{offset},500
     </select>
+    <select id="getByRelMidAndRelUid" resultType="com.csb.pojo.UserMonitor">
+        select <include refid="Base_Column_List"/>
+        from <include refid="tableName"/>
+        <where>
+            rel_mid = #{mid}
+            and
+            rel_uid = #{uid}
+        </where>
+        limit 1
+    </select>
 </mapper>

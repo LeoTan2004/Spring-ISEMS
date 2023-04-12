@@ -23,5 +23,7 @@ public interface TeamService extends IService<Team> {
     boolean setTeamAdmin(Team team, User admin);
 
     boolean addTeam(Team team);
+
+    List<Team> getByUser(User user,long offset);
 }
 

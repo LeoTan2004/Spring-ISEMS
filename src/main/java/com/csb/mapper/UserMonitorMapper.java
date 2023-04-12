@@ -19,6 +19,7 @@ public interface UserMonitorMapper extends BaseMapper<UserMonitor> {
 
     List<UserMonitor> getByMid(@Param("mid") long monitorId, @Param("offset")long offset);
     int deleteByRelMidAndRelUid(@Param("mid") long monitorId,@Param("uid") long userId);
+    UserMonitor getByRelMidAndRelUid(@Param("mid") long monitorId,@Param("uid") long userId);
 }
 
 

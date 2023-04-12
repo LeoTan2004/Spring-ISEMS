@@ -61,6 +61,12 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
         team.setLogTablename("#{tid}");
         return teamMapper.insert(team) == 1;
     }
+
+    @Override
+    public List<Team> getByUser(User user, long offset) {
+
+        return teamMapper.getByUser(user.getUid(),offset);
+    }
 }
 
 

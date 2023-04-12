@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.csb.pojo.Monitor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public interface MonitorMapper extends BaseMapper<Monitor> {
     Monitor getByTidAndName(@Param("tid") long teamId, @Param("name") String monitorName);
 
     List<Monitor> getByUser(@Param("uid") Long userId,@Param("offset")long offset);
+
+    List<Monitor> getListByTid(@Param("tid") Long tid, @Param("offset") long offset);
 }
 
 

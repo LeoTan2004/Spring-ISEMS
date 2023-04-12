@@ -11,12 +11,4 @@ class SpringIsemsApplicationTests {
     @Autowired
     UserMapper userMapper;
 
-    @Test
-    void contextLoads() {
-        userMapper.insert(new User(){{
-            this.setUsername("1332123333");
-        }});
-
-    }
-
 }

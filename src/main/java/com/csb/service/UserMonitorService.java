@@ -17,4 +17,5 @@ public interface UserMonitorService extends IService<UserMonitor> {
     List<UserMonitor> getByMonitor(Monitor monitor,long offset);
     boolean addUserMonitor(User user,Monitor monitor);
     boolean delUserMonitor(User user,Monitor monitor);
+    UserMonitor getByUserAndMonitor(User user,Monitor monitor);
 }

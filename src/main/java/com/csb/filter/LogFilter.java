@@ -1,7 +1,6 @@
 package com.csb.filter;
 
-import com.csb.utils.Asset;
-import com.csb.utils.AuthorityCheck;
+import com.alibaba.fastjson.JSON;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
@@ -13,23 +12,21 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Component
 @Slf4j
-@Order(1<<1)
-@WebFilter(filterName = "IsLoginFilter",urlPatterns = "/*")
-public class CheckLoginFilter extends HttpFilter {
+@Order(1)
+@WebFilter(filterName = "LogFilter", urlPatterns = "/*")
+public class LogFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         System.out.println(this.getClass().getSimpleName());
-        String requestURI = request.getRequestURI();
-        if (requestURI.startsWith("/authority")){
-            super.doFilter(request, response, chain);
-        }
-        else if (!Asset.isNull(request.getSession().getAttribute(AuthorityCheck.USER))) {
-            super.doFilter(request, response, chain);
-        }else {
-            response.sendError(401);
-        }
+        StringBuffer url = request.getRequestURL();
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Object json = JSON.toJSON(parameterMap);
+        url.append(":\n").append(json);
+        log.info(url.toString());
+        super.doFilter(request, response, chain);
     }
 }
