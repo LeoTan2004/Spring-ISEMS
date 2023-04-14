@@ -2,31 +2,17 @@
 spring:
   datasource:
     username: root
-    password: TanJiacheng@2004
-    url: jdbc:mysql://localhost:3306/csb?serverTimezone=UTC
+    password: root
+    url: jdbc:mysql://localhost:3306/monitor_system?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   servlet:
     session:
       cookie:
         http-only: false
-#
-#---
-#server:
-#  port: 8082
-#spring:
-#  profiles:
-#    group:dev
-#---
-#server:
-#  port: 8081
-#spring:
-#  datasource:
-#    username: root
-#    password: TanJiacheng@2004
-#  profiles:
-#    group:pro
-#---
-#spring:
-#  profiles:
-#    active: dev
+mybatis-plus:
+  global-config:
+    db-config:
+      table-underline: true
+  configuration:
+    map-underscore-to-camel-case: true

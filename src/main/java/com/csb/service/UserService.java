@@ -1,26 +1,29 @@
 package com.csb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.csb.dto.UserParam;
-import com.csb.pojo.Team;
-import com.csb.pojo.User;
+import com.csb.dto.RegisterParam;
+import com.csb.service.auth.AuthenticationType;
+import com.csb.module.authority.User;
+import com.csb.module.team.Team;
+import com.csb.module.role.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
-* @author Leo
-* @description 针对表【t_user】的数据库操作Service
-* @createDate 2023-03-16 10:10:43
-*/
 @Service
 public interface UserService extends IService<User> {
-    User loginWithPassword(UserParam userParam);
-    User loginWithPhone(UserParam userParam);
-    User getByUsername(String username);
-    User getById(Long id);
-    List<User> getByTeam(Team team, long offset);
-    boolean register(UserParam userParam);
-    boolean modifyUser(UserParam userParam);
-    public boolean changePassword(UserParam userParam);
+    User login(AuthenticationType type, Object... args);
+
+    Integer register(RegisterParam user);
+
+    Boolean changePassword(Long uid, String oldPassword, String newPassword);
+
+    List<User> getByTeam(Long tid, Long offset);
+
+    List<User> getByTeam(Team team, Long offset);
+
+    List<User> getByRole(Role role, Long offset);
+
+    List<User> getByRole(Long rid, Long offset);
+
 }

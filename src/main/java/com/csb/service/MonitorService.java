@@ -1,23 +1,23 @@
 package com.csb.service;
 
-
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.csb.pojo.Monitor;
-import com.csb.pojo.Team;
-import com.csb.pojo.User;
+import com.csb.module.authority.User;
+import com.csb.module.monitor.Monitor;
+import com.csb.module.team.Team;
 
 import java.util.List;
 
-/**
-* @author Leo
-* @description 针对表【t_monitor】的数据库操作Service
-* @createDate 2023-03-16 10:10:43
-*/
 public interface MonitorService extends IService<Monitor> {
-    Monitor getById(Long id);
-    List<Monitor> getByTeam(Team team,long offset);
-    List<Monitor> getByUser(User user,long offset);
+    List<Monitor> getByTeam(Team team, Long offset);
 
-    List<Monitor> getListByTeam(Team team, long offset);
+    List<Monitor> getByTeam(Long tid, Long offset);
+
+    List<Monitor> getByUser(User user, Long offset);
+
+    List<Monitor> getByUser(Long uid, Long offset);
+
+    Boolean linkWithTeam(Long mid, Long tid, Boolean isLink);
+
+    Boolean linkWithTeam(Monitor monitor, Team team, Boolean isLink);
 
 }

@@ -1,21 +1,34 @@
 package com.csb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.csb.pojo.Role;
-import com.csb.pojo.Team;
-import com.csb.pojo.User;
+import com.csb.module.authority.User;
+import com.csb.module.role.Permission;
+import com.csb.module.role.Role;
+import com.csb.module.team.Team;
 
 import java.util.List;
 
-/**
-* @author Leo
-* @description 针对表【t_role】的数据库操作Service
-* @createDate 2023-03-16 10:10:43
-*/
 public interface RoleService extends IService<Role> {
-    Role getById(Long id);
-    boolean delRole(Role role);
-    List<Role> getRoleByTeam(Team team,long offset);
-    List<Role> getRoleByUser(User user,long offset);
-    Role getByTeamAndName(Team team,String name);
+    List<Role> getByUser(User user, Long offset);
+
+    List<Role> getByUser(Long uid, Long offset);
+
+    List<Role> getByTeam(Team team, Long offset);
+
+    List<Role> getByTeam(Long tid, Long offset);
+
+    Boolean setPerMission(Long rid, Permission permission);
+
+    Boolean setPerMission(Role role, Permission permission);
+
+    Boolean deleteAllWithTeam(Long tid);
+
+    Role getByTeamAndRoleName(Long tid, String name);
+
+    Role getByTeamAndRoleName(Team team, String name);
+
+    Boolean linkedWithRole(Long uid, Long rid);
+
+    Boolean linkedWithRole(User user, Role role);
+
 }

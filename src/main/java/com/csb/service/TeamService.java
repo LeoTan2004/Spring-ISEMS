@@ -1,29 +1,37 @@
 package com.csb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.csb.pojo.Team;
-import com.csb.pojo.User;
+import com.csb.dto.TeamCreateParam;
+import com.csb.module.authority.User;
+import com.csb.module.monitor.Monitor;
+import com.csb.module.team.Team;
 
 import java.util.List;
 
-/**
- * @author Leo
- * @description 针对表【t_team】的数据库操作Service
- * @createDate 2023-03-16 10:10:43
- */
 public interface TeamService extends IService<Team> {
-    Team getById(Long id);
+    Boolean createTeam(TeamCreateParam param);
 
-    List<Team> getByAdmin(User admin, long offset);
+    Boolean deleteTeam(Team team);
 
-    boolean delTeam(Team team);
+    Boolean deleteTeam(Long tid);
 
-    boolean setTeamName(Team team, String name);
+    Boolean changeAdmin(Team team, User user);
 
-    boolean setTeamAdmin(Team team, User admin);
+    Boolean changeAdmin(Long tid, Long uid);
 
-    boolean addTeam(Team team);
+    List<Team> getByAdmin(User admin, Long offset);
 
-    List<Team> getByUser(User user,long offset);
+    List<Team> getByAdmin(Long adminId, Long offset);
+
+    List<Team> getByUser(User user, Long offset);
+
+    List<Team> getByUser(Long uid, Long offset);
+
+    Team getByMonitor(Monitor monitor);
+
+    Team getByMonitor(Long mid);
+
+    Boolean applyToTeam(Long uid, Long tid);
+
+    Boolean quitTeam(Long uid, Long tid);
 }
-
