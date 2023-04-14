@@ -12,9 +12,9 @@ public enum AuthenticationType {
     private final Integer code;
     private final Actionable whenSuc;
     private final Actionable whenFail;
-    private final Class<? extends Authentication> authentication;
+    private final Class<? extends AbstractAuthentication> authentication;
 
-    AuthenticationType(Integer code, Actionable whenSuc, Actionable whenFail, Class<? extends Authentication> authentication1) {
+    AuthenticationType(Integer code, Actionable whenSuc, Actionable whenFail, Class<? extends AbstractAuthentication> authentication1) {
         this.code = code;
         this.whenSuc = whenSuc;
         this.whenFail = whenFail;
@@ -25,7 +25,7 @@ public enum AuthenticationType {
         return code;
     }
 
-    public Class<? extends Authentication> getAuthentication() {
+    public Class<? extends AbstractAuthentication> getAuthentication() {
         return authentication;
     }
 

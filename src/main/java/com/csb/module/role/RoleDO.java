@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @EqualsAndHashCode
 @TableName("roles")
-public class Role {
+public class RoleDO {
     public static final String MEMBER = "默认成员";
     public static final String APPLICANT = "默认访客";
 
@@ -21,21 +21,21 @@ public class Role {
     private Long rid;
     private Long relTid;
     private String name;
-    private Permission permissions;
+    private PermissionEnum permissions;
     @TableField(fill = FieldFill.INSERT)
     private Timestamp insertTime;
     @TableField(fill = FieldFill.UPDATE)
     private Timestamp updateTime;
 
-    public static Role getDefaultMemberRole(Long relTid) {
-        return new Role(null, relTid, MEMBER, Permission.PERMISSION_READ);
+    public static RoleDO getDefaultMemberRole(Long relTid) {
+        return new RoleDO(null, relTid, MEMBER, PermissionEnum.PERMISSION_READ);
     }
 
-    public static Role getDefaultApplicantRole(Long relTid) {
-        return new Role(null, relTid, APPLICANT, Permission.PERMISSION_NOTHING);
+    public static RoleDO getDefaultApplicantRole(Long relTid) {
+        return new RoleDO(null, relTid, APPLICANT, PermissionEnum.PERMISSION_NOTHING);
     }
 
-    public Role(Long rid, Long relTid, String name, Permission permissions) {
+    public RoleDO(Long rid, Long relTid, String name, PermissionEnum permissions) {
         this.rid = rid;
         this.relTid = relTid;
         this.name = name;

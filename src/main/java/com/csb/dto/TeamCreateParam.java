@@ -1,6 +1,5 @@
 package com.csb.dto;
 
-import com.csb.module.team.TeamStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

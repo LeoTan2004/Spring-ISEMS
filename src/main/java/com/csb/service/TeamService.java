@@ -2,34 +2,34 @@ package com.csb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.csb.dto.TeamCreateParam;
-import com.csb.module.authority.User;
-import com.csb.module.monitor.Monitor;
-import com.csb.module.team.Team;
+import com.csb.module.authority.UserDO;
+import com.csb.module.monitor.MonitorDO;
+import com.csb.module.team.TeamDO;
 
 import java.util.List;
 
-public interface TeamService extends IService<Team> {
+public interface TeamService extends IService<TeamDO> {
     Boolean createTeam(TeamCreateParam param);
 
-    Boolean deleteTeam(Team team);
+    Boolean deleteTeam(TeamDO teamDO);
 
     Boolean deleteTeam(Long tid);
 
-    Boolean changeAdmin(Team team, User user);
+    Boolean changeAdmin(TeamDO teamDO, UserDO userDO);
 
     Boolean changeAdmin(Long tid, Long uid);
 
-    List<Team> getByAdmin(User admin, Long offset);
+    List<TeamDO> listByAdmin(UserDO admin, Long offset);
 
-    List<Team> getByAdmin(Long adminId, Long offset);
+    List<TeamDO> listByAdmin(Long adminId, Long offset);
 
-    List<Team> getByUser(User user, Long offset);
+    List<TeamDO> listByUser(UserDO userDO, Long offset);
 
-    List<Team> getByUser(Long uid, Long offset);
+    List<TeamDO> listByUser(Long uid, Long offset);
 
-    Team getByMonitor(Monitor monitor);
+    TeamDO getByMonitor(MonitorDO monitorDO);
 
-    Team getByMonitor(Long mid);
+    TeamDO getByMonitor(Long mid);
 
     Boolean applyToTeam(Long uid, Long tid);
 

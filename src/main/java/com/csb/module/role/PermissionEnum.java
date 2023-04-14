@@ -2,7 +2,7 @@ package com.csb.module.role;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum Permission {
+public enum PermissionEnum {
 
     PERMISSION_MANAGE(1 << 11 | 1 << 10, "del,add,mod monitor and member,read of course"),
     PERMISSION_MANAGE_MONITOR(1 << 11, "del,add,mod monitor,read of course"),
@@ -22,7 +22,7 @@ public enum Permission {
         return description;
     }
 
-    Permission(int code, String description) {
+    PermissionEnum(int code, String description) {
         this.code = code;
         this.description = description;
     }

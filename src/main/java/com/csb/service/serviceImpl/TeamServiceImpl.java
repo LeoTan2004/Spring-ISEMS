@@ -2,14 +2,15 @@ package com.csb.service.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.csb.dto.TeamCreateParam;
-import com.csb.module.authority.User;
+import com.csb.module.authority.UserDO;
 import com.csb.module.authority.UserMapper;
-import com.csb.module.monitor.Monitor;
-import com.csb.module.role.Role;
+import com.csb.module.monitor.MonitorDO;
+import com.csb.module.role.RoleDO;
 import com.csb.module.role.RoleMapper;
-import com.csb.module.team.Team;
+import com.csb.module.team.TeamDO;
 import com.csb.module.team.TeamMapper;
-import com.csb.module.team.TeamStatus;
+import com.csb.module.team.TeamStatusEnum;
+import com.csb.service.RoleService;
 import com.csb.service.TeamService;
 import com.csb.utils.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,42 +19,47 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements TeamService {
+public class TeamServiceImpl extends ServiceImpl<TeamMapper, TeamDO> implements TeamService {
     @Autowired
     private TeamMapper teamMapper;
 
+
     @Override
     public Boolean createTeam(TeamCreateParam param) {
-        Team team = getTeamFromParam(param);
-        return 1 == teamMapper.insert(team);
+        TeamDO teamDO = getTeamFromParam(param);
+        return 1 == teamMapper.insert(teamDO);
     }
 
-    private Team getTeamFromParam(TeamCreateParam param) {
+    private TeamDO getTeamFromParam(TeamCreateParam param) {
         String teamName, description;
         Long admin;
         if (Assert.isEnpty((teamName = param.getTeamName())) || Assert.isNull((admin = param.getAdmin()))) {
             return null;
         }
         description = param.getDescription();
-        return new Team(admin, TeamStatus.TEAM_STATUS_OPEN, teamName, description);
+        return new TeamDO(admin, TeamStatusEnum.TEAM_STATUS_OPEN, teamName, description);
     }
 
     @Override
-    public Boolean deleteTeam(Team team) {
-        if (Assert.isNull(team)) return null;
-        return deleteTeam(team.getTid());
+    public Boolean deleteTeam(TeamDO teamDO) {
+        if (Assert.isNull(teamDO)) return null;
+        return deleteTeam(teamDO.getTid());
     }
 
     @Override
     public Boolean deleteTeam(Long tid) {
         if (Assert.isNull(tid)) return null;
-        return 1 == teamMapper.deleteById(tid);
+        if (1 == teamMapper.deleteById(tid)) {
+            roleService.deleteAllWithTeam(tid);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public Boolean changeAdmin(Team team, User user) {
-        if (Assert.isNull(team, user)) return null;
-        return changeAdmin(team.getTid(), user.getUid());
+    public Boolean changeAdmin(TeamDO teamDO, UserDO userDO) {
+        if (Assert.isNull(teamDO, userDO)) return null;
+        return changeAdmin(teamDO.getTid(), userDO.getUid());
     }
 
     @Override
@@ -63,37 +69,37 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
     }
 
     @Override
-    public List<Team> getByAdmin(User admin, Long offset) {
+    public List<TeamDO> listByAdmin(UserDO admin, Long offset) {
         if (Assert.isNull(admin, offset)) return null;
-        return getByAdmin(admin.getUid(), offset);
+        return listByAdmin(admin.getUid(), offset);
     }
 
     @Override
-    public List<Team> getByAdmin(Long adminId, Long offset) {
+    public List<TeamDO> listByAdmin(Long adminId, Long offset) {
         if (Assert.isNull(adminId, offset)) return null;
-        return teamMapper.getByAdmin(adminId, offset);
+        return teamMapper.listByAdmin(adminId, offset);
     }
 
     @Override
-    public List<Team> getByUser(User user, Long offset) {
-        if (Assert.isNull(user, offset)) return null;
-        return getByUser(user.getUid(), offset);
+    public List<TeamDO> listByUser(UserDO userDO, Long offset) {
+        if (Assert.isNull(userDO, offset)) return null;
+        return listByUser(userDO.getUid(), offset);
     }
 
     @Override
-    public List<Team> getByUser(Long uid, Long offset) {
+    public List<TeamDO> listByUser(Long uid, Long offset) {
         if (Assert.isNull(uid, offset)) return null;
-        return teamMapper.getByUser(uid, offset);
+        return teamMapper.listByUser(uid, offset);
     }
 
     @Override
-    public Team getByMonitor(Monitor monitor) {
-        if (Assert.isNull(monitor)) return null;
-        return getByMonitor(monitor.getMid());
+    public TeamDO getByMonitor(MonitorDO monitorDO) {
+        if (Assert.isNull(monitorDO)) return null;
+        return getByMonitor(monitorDO.getMid());
     }
 
     @Override
-    public Team getByMonitor(Long mid) {
+    public TeamDO getByMonitor(Long mid) {
         if (Assert.isNull(mid)) return null;
         return teamMapper.getByMonitor(mid);
     }
@@ -101,19 +107,29 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private RoleMapper roleMapper;
+    private RoleService roleService;
+
 
     @Override
     public Boolean applyToTeam(Long uid, Long tid) {
-        if (Assert.isNull(uid,tid)) return null;
-        Role role = roleMapper.getByTeamAndName(tid, Role.APPLICANT);
-        return 1 == userMapper.linkWithRole(uid, role.getRid());
+        if (Assert.isNull(uid, tid)) return null;
+        RoleDO roleDO = roleService.getByTeamAndRoleName(tid, RoleDO.APPLICANT);
+        return 1 == userMapper.linkWithRole(uid, roleDO.getRid());
     }
 
     @Override
     public Boolean quitTeam(Long uid, Long tid) {
-        if (Assert.isNull(uid,tid)) return null;
-        Role role = roleMapper.getByUserAndTeam(uid, tid);
-        return 1 == userMapper.disLinkWithRole(uid, role.getRid());
+        if (Assert.isNull(uid, tid)) return null;
+        return roleService.deleteByUserAndTeam(uid, tid);
+    }
+
+
+    @Override
+    public boolean save(TeamDO entity) {
+        if (super.save(entity)) {
+            roleService.initForTeam(entity.getTid());
+            return true;
+        }
+        return false;
     }
 }

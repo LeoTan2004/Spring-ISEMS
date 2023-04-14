@@ -2,7 +2,7 @@ package com.csb.module.team;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum TeamStatus {
+public enum TeamStatusEnum {
     TEAM_STATUS_OPEN(1,"开放"),
     TEAM_STATUS_CLOSE(0,"封闭");
 
@@ -17,7 +17,7 @@ public enum TeamStatus {
         return description;
     }
 
-    TeamStatus(Integer code, String description) {
+    TeamStatusEnum(Integer code, String description) {
         this.code = code;
         this.description = description;
     }

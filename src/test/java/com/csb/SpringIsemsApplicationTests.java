@@ -1,32 +1,15 @@
 package com.csb;
 
-import com.csb.dto.RegisterParam;
-import com.csb.service.AccountService;
-import com.csb.module.account.UserInfoMapper;
-import com.csb.module.authority.UserMapper;
-import com.csb.service.UserService;
-import com.csb.module.monitor.MonitorMapper;
-import com.csb.module.role.RoleMapper;
-import com.csb.module.team.TeamMapper;
+import com.csb.module.role.RoleDO;
+import com.csb.module.team.TeamDO;
+import com.csb.module.team.TeamStatusEnum;
+import com.csb.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class SpringIsemsApplicationTests {
-    @Autowired
-    UserMapper userMapper;
-
-    @Autowired
-    RoleMapper roleMapper;
-
-    @Autowired
-    UserInfoMapper mapper;
-
-    @Autowired
-    TeamMapper teamMapper;
-    @Autowired
-    MonitorMapper monitorMapper;
 
     @Autowired
     AccountService accountService;
@@ -34,9 +17,21 @@ class SpringIsemsApplicationTests {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TeamService teamService;
+
+    @Autowired
+    MonitorService monitorService;
+
+    @Autowired
+    RoleService roleService;
+
     @Test
     public void testForService() {
-        System.out.println(roleMapper.getByTeam(1L, 0L));
+        TeamDO teamDO = new TeamDO(1L, TeamStatusEnum.TEAM_STATUS_OPEN, "wuhuqifeiluo", "wuhuqifeihuhuhu");
+        teamService.save(teamDO);
+
+
     }
 
 

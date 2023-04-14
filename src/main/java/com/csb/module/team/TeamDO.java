@@ -13,11 +13,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @EqualsAndHashCode
 @TableName("teams")
-public class Team {
+public class TeamDO {
     @TableId(type = IdType.ASSIGN_ID)
     private Long tid;
     private Long admin;
-    private TeamStatus status;
+    private TeamStatusEnum status;
     private String teamName;
     private String description;
     @TableField(fill = FieldFill.INSERT)
@@ -25,7 +25,7 @@ public class Team {
     @TableField(fill = FieldFill.UPDATE)
     private Timestamp updateTime;
 
-    public Team( Long admin, TeamStatus status, String teamName, String description) {
+    public TeamDO(Long admin, TeamStatusEnum status, String teamName, String description) {
         this.admin = admin;
         this.status = status;
         this.teamName = teamName;

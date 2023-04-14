@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @EqualsAndHashCode
 @TableName("user_info")
-public class UserInfo {
+public class UserInfoDO {
     @TableId
     private Long relUid;
     private String introduction;

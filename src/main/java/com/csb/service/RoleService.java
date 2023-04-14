@@ -1,34 +1,42 @@
 package com.csb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.csb.module.authority.User;
-import com.csb.module.role.Permission;
-import com.csb.module.role.Role;
-import com.csb.module.team.Team;
+import com.csb.module.authority.UserDO;
+import com.csb.module.role.PermissionEnum;
+import com.csb.module.role.RoleDO;
+import com.csb.module.team.TeamDO;
 
 import java.util.List;
 
-public interface RoleService extends IService<Role> {
-    List<Role> getByUser(User user, Long offset);
+public interface RoleService extends IService<RoleDO> {
+    List<RoleDO> listByUser(UserDO userDO, Long offset);
 
-    List<Role> getByUser(Long uid, Long offset);
+    List<RoleDO> listByUser(Long uid, Long offset);
 
-    List<Role> getByTeam(Team team, Long offset);
+    List<RoleDO> listByTeam(TeamDO teamDO, Long offset);
 
-    List<Role> getByTeam(Long tid, Long offset);
+    List<RoleDO> listByTeam(Long tid, Long offset);
 
-    Boolean setPerMission(Long rid, Permission permission);
+    Boolean setPerMission(Long rid, PermissionEnum permissionEnum);
 
-    Boolean setPerMission(Role role, Permission permission);
+    Boolean setPerMission(RoleDO roleDO, PermissionEnum permissionEnum);
 
     Boolean deleteAllWithTeam(Long tid);
 
-    Role getByTeamAndRoleName(Long tid, String name);
+    RoleDO getByTeamAndRoleName(Long tid, String name);
 
-    Role getByTeamAndRoleName(Team team, String name);
+    RoleDO getByTeamAndRoleName(TeamDO teamDO, String name);
 
     Boolean linkedWithRole(Long uid, Long rid);
 
-    Boolean linkedWithRole(User user, Role role);
+    Boolean linkedWithRole(UserDO userDO, RoleDO roleDO);
+
+    Boolean initForTeam(TeamDO teamDO);
+
+    Boolean initForTeam(Long tid);
+
+    Boolean deleteByUserAndTeam(Long uid, Long tid);
+
+    Boolean deleteByUserAndTeam(UserDO userDo, TeamDO teamDO);
 
 }

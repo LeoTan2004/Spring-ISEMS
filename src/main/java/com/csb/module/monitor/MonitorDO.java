@@ -1,4 +1,4 @@
-package com.csb.module.authority;
+package com.csb.module.monitor;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
@@ -6,21 +6,20 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@TableName("users")
-public class User{
+@TableName("monitors")
+public class MonitorDO {
     @TableId(type = IdType.ASSIGN_ID)
-    private Long uid;
-    private String username;
-    private Long phone;
-    private String email;
-    private Date lastLoginTime;
+    private Long mid;
+    private String name;
+    private String location;
+    private Long relTid;
+    private MonitorStatusEnum status;
     @TableField(fill = FieldFill.INSERT)
     private Timestamp insertTime;
     @TableField(fill = FieldFill.UPDATE)

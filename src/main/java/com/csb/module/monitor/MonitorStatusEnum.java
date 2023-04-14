@@ -2,7 +2,7 @@ package com.csb.module.monitor;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-public enum MonitorStatus {
+public enum MonitorStatusEnum {
     MONITOR_STATUS_ONLINE(1,"正常"),
     MONITOR_STATUS_OFFLINE(0,"离线"),
     MONITOR_STATUS_CRUSH(1<<31,"设备内部发生异常,无法正常通信"),
@@ -20,7 +20,7 @@ public enum MonitorStatus {
         return description;
     }
 
-    MonitorStatus(Integer code, String description) {
+    MonitorStatusEnum(Integer code, String description) {
         this.code = code;
         this.description = description;
     }

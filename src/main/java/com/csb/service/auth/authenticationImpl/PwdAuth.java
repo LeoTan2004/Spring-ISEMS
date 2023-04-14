@@ -1,14 +1,14 @@
 package com.csb.service.auth.authenticationImpl;
 
-import com.csb.service.auth.Authentication;
+import com.csb.module.authority.UserDO;
+import com.csb.service.auth.AbstractAuthentication;
 import com.csb.service.auth.AuthenticationType;
-import com.csb.module.authority.User;
 import com.csb.module.authority.UserMapper;
 
-public final class PwdAuth extends Authentication<User> {
-    private SecurityDataSource<User> source;
+public final class PwdAuth extends AbstractAuthentication<UserDO> {
+    private SecurityDataSource<UserDO> source;
 
-    public PwdAuth init(SecurityDataSource<User> source) {
+    public PwdAuth init(SecurityDataSource<UserDO> source) {
         this.source = source;
         return this;
     }
@@ -32,7 +32,7 @@ public final class PwdAuth extends Authentication<User> {
 
     @Override
     @SuppressWarnings("all")
-    public User auth(Object... args) {
+    public UserDO auth(Object... args) {
         Object uname = null, pwd = null;
         if (2 < args.length || null == (uname = args[0]) || null == (pwd = args[1])) {
             return null;
@@ -46,7 +46,7 @@ public final class PwdAuth extends Authentication<User> {
     }
 
     @Override
-    public Authentication<User> init(Object o) {
+    public AbstractAuthentication<UserDO> init(Object o) {
         if (o instanceof UserMapper userMapper) {
             return init(userMapper);
         }
