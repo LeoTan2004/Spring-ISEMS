@@ -1,7 +1,7 @@
 package com.csb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.csb.dto.RegisterParam;
+import com.csb.dto.RegisterDTO;
 import com.csb.service.auth.AuthenticationType;
 import com.csb.module.authority.UserDO;
 import com.csb.module.team.TeamDO;
@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserService extends IService<UserDO> {
     UserDO login(AuthenticationType type, Object... args);
 
-    Integer register(RegisterParam user);
+    Integer register(UserDO userDO);
 
     Boolean changePassword(Long uid, String oldPassword, String newPassword);
 

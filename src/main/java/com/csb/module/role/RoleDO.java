@@ -41,4 +41,9 @@ public class RoleDO {
         this.name = name;
         this.permissions = permissions;
     }
+
+    public boolean checkPermission(PermissionEnum permissions) {
+        if (permissions == null )return false;
+        return this.permissions.checkpermission(permissions);
+    }
 }

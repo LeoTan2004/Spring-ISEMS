@@ -39,4 +39,7 @@ public interface RoleService extends IService<RoleDO> {
 
     Boolean deleteByUserAndTeam(UserDO userDo, TeamDO teamDO);
 
+    RoleDO getByTeamAndUser(UserDO userDO,TeamDO teamDO);
+    RoleDO getByTeamAndUser(Long uid,Long tid);
+
 }

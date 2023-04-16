@@ -125,4 +125,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
             return super.save(entity);
         return false;
     }
+
+    @Override
+    public RoleDO getByTeamAndUser(Long uid, Long tid) {
+        if (Assert.isNull(uid, tid)) return null;
+        return roleMapper.getByUserAndTeam(uid, tid);
+    }
+
+    @Override
+    public RoleDO getByTeamAndUser(UserDO userDO, TeamDO teamDO) {
+        if (Assert.isNull(userDO, teamDO)) return null;
+        return getByTeamAndUser(userDO.getUid(), teamDO.getTid());
+    }
 }

@@ -1,7 +1,8 @@
 package com.csb.service.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.csb.dto.RegisterParam;
+import com.csb.dto.RegisterDTO;
+import com.csb.exception.IllegalParamException;
 import com.csb.module.authority.UserDO;
 import com.csb.service.auth.AbstractAuthentication;
 import com.csb.service.auth.AuthenticationType;
@@ -38,8 +39,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
-    public Integer register(RegisterParam param) {
-        UserDO userDO = getUserFromParam(param);
+    public Integer register(UserDO userDO) {
+
         if (null == userDO ||
                 null != userMapper.getByUsername(userDO.getUsername()) ||
                 null != userMapper.getByPhone(userDO.getPhone())) {
@@ -90,14 +91,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
 
-    private UserDO getUserFromParam(RegisterParam param) {
-        String username = param.getUsername();
-        String password = param.getPassword();
-        Long phone = param.getPhone();
-        if (!Assert.isEnpty(username, password) && null != phone) {
-            return new UserDO(null, username, phone, null, null, null, null);
-        }
-        return null;
+    private UserDO getUserFromParam(RegisterDTO param) throws IllegalParamException {
+        return param.toUserDO();
     }
 
 

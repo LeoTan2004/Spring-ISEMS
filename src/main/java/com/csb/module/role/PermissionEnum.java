@@ -30,4 +30,8 @@ public enum PermissionEnum {
     public int getCode() {
         return code;
     }
+
+    public boolean checkpermission(PermissionEnum permissionEnum) {
+        return this.code >= permissionEnum.code;
+    }
 }

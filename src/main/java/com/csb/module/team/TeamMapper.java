@@ -10,19 +10,21 @@ import java.util.List;
 
 @Mapper
 public interface TeamMapper extends BaseMapper<TeamDO> {
-    @Select({"select tid, admin, status, team_name, description, teams.insert_time, teams.update_time " +
-            "from monitor_system.teams,monitor_system.team_user,monitor_system.roles " +
-            "where tid=roles.rel_tid and rel_uid=#{uid} limit #{offset},500;"})
+    @Select({"select tid, admin, status, team_name, description, team.insert_time, team.update_time " +
+            "from monitor_system.team,monitor_system.team_user,monitor_system.role " +
+            "where tid= monitor_system.role.rel_tid and rel_uid=#{uid} limit #{offset},500;"})
     List<TeamDO> listByUser(@Param("uid") Long uid, @Param("offset") Long offset);
-    @Select("select tid, admin, status, team_name, description, teams.insert_time, teams.update_time " +
-            " from monitor_system.teams " +
-            "where teams.admin = #{admin} limit #{offset},500;")
+
+    @Select("select tid, admin, status, team_name, description, team.insert_time, team.update_time " +
+            " from monitor_system.team " +
+            "where team.admin = #{admin} limit #{offset},500;")
     List<TeamDO> listByAdmin(@Param("admin") Long admin, @Param("offset") Long offset);
 
-    @Select("select tid, admin, teams.status, team_name, description, teams.insert_time, teams.update_time from monitor_system.teams,monitor_system.monitors where monitors.rel_tid=tid and mid = #{mid};")
+    @Select("select tid, admin, team.status, team_name, description, team.insert_time, team.update_time " +
+            "from monitor_system.team,monitor_system.monitor where monitor.rel_tid=tid and mid = #{mid};")
     TeamDO getByMonitor(@Param("mid") Long mid);
 
-    @Update("update monitor_system.teams set admin = #{admin} where tid = #{tid};")
-    Integer setAdmin(@Param("tid")Long tid,@Param("uid")Long admin);
+    @Update("update monitor_system.team set admin = #{admin} where tid = #{tid};")
+    Integer setAdmin(@Param("tid") Long tid, @Param("uid") Long admin);
 
 }

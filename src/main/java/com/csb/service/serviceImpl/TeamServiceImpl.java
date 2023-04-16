@@ -1,12 +1,11 @@
 package com.csb.service.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.csb.dto.TeamCreateParam;
+import com.csb.dto.TeamCreateDTO;
 import com.csb.module.authority.UserDO;
 import com.csb.module.authority.UserMapper;
 import com.csb.module.monitor.MonitorDO;
 import com.csb.module.role.RoleDO;
-import com.csb.module.role.RoleMapper;
 import com.csb.module.team.TeamDO;
 import com.csb.module.team.TeamMapper;
 import com.csb.module.team.TeamStatusEnum;
@@ -25,18 +24,20 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, TeamDO> implements 
 
 
     @Override
-    public Boolean createTeam(TeamCreateParam param) {
+    public Boolean createTeam(TeamCreateDTO param) {
         TeamDO teamDO = getTeamFromParam(param);
         return 1 == teamMapper.insert(teamDO);
     }
 
-    private TeamDO getTeamFromParam(TeamCreateParam param) {
+    private TeamDO getTeamFromParam(TeamCreateDTO param) {
         String teamName, description;
         Long admin;
-        if (Assert.isEnpty((teamName = param.getTeamName())) || Assert.isNull((admin = param.getAdmin()))) {
+        if (Assert.isEnpty(teamName = param.teamName()) ||
+                Assert.isNull(admin = param.admin())
+        ) {
             return null;
         }
-        description = param.getDescription();
+        description = param.description();
         return new TeamDO(admin, TeamStatusEnum.TEAM_STATUS_OPEN, teamName, description);
     }
 

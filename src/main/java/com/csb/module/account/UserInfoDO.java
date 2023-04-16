@@ -22,7 +22,7 @@ public class UserInfoDO {
     private Long relUid;
     private String introduction;
     private String nickname;
-    private Integer sex;
+    private Gender sex;
     private Date birthday;
     private String contact;
     @TableField(fill = FieldFill.INSERT)
