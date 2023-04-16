@@ -33,7 +33,8 @@ public interface UserMapper extends BaseMapper<UserDO> {
             " where rel_uid=uid and rel_rid=#{rid} limit #{offset},500;"})
     List<UserDO> listByRole(@Param("rid") Long rid, @Param("offset") Long offset);
 
-    @Insert({"insert into monitor_system.team_user (rel_rid, rel_uid, insert_time) values (#{rid},#{uid},current_timestamp() )"})
+    @Insert({"insert into monitor_system.team_user (rel_rid, rel_uid, insert_time) values (#{rid},#{uid},current_timestamp() ) " +
+            "ON DUPLICATE KEY UPDATE rel_rid = #{rid},update_time = current_timestamp();"})
     int linkWithRole(@Param("uid") Long uid, @Param("rid") Long rid);
 
     @Delete({"delete from monitor_system.team_user where rel_rid=#{rid} and rel_uid=#{uid};"})

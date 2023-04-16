@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@TableName("monitors")
+@TableName("monitor")
 public class MonitorDO {
     @TableId(type = IdType.ASSIGN_ID)
     private Long mid;

@@ -18,7 +18,6 @@ public record RegisterDTO(String username, String password, Long phone, String e
         UserDO userDO = new UserDO();
         userDO.setPhone(phone);
         userDO.setUsername(username);
-        userDO.setPassword(password);
         return userDO;
     }
 
@@ -29,7 +28,7 @@ public record RegisterDTO(String username, String password, Long phone, String e
     }
 
     private boolean isIllegal() {
-        return !Assert.isEnpty(username, password, pic_cap) && !Assert.isNull(phone);
+        return Assert.isEnpty(username, password, pic_cap) || Assert.isNull(phone);
     }
 
     public boolean checkCap(HttpSession session) {

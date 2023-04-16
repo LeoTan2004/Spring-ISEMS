@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserService extends IService<UserDO> {
     UserDO login(AuthenticationType type, Object... args);
 
-    Integer register(UserDO userDO);
+    Integer register(UserDO userDO,String password);
 
     Boolean changePassword(Long uid, String oldPassword, String newPassword);
 

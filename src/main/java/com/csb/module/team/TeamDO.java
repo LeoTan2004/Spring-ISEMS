@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@TableName("teams")
+@TableName("team")
 public class TeamDO {
     @TableId(type = IdType.ASSIGN_ID)
     private Long tid;

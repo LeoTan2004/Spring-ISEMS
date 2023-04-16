@@ -133,6 +133,18 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements 
     }
 
     @Override
+    public Boolean deleteById(Long rid) {
+        if (Assert.isNull(rid)) return null;
+        return 1 == roleMapper.deleteById(rid) && -1 < roleMapper.clearLinksByRid(rid);
+    }
+
+    @Override
+    public Boolean deleteById(RoleDO role) {
+        if (Assert.isNull(role)) return null;
+        return deleteById(role.getRid());
+    }
+
+    @Override
     public RoleDO getByTeamAndUser(UserDO userDO, TeamDO teamDO) {
         if (Assert.isNull(userDO, teamDO)) return null;
         return getByTeamAndUser(userDO.getUid(), teamDO.getTid());

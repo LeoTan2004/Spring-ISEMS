@@ -30,7 +30,8 @@ public class AuthorityFilter extends HttpFilter {
                     return;
                 }
             }
-            response.sendError(406);
+            response.sendError(401);
+            return;
         }
         super.doFilter(request, response, chain);
     }

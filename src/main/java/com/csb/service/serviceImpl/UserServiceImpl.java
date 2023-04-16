@@ -39,14 +39,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     }
 
     @Override
-    public Integer register(UserDO userDO) {
+    public Integer register(UserDO userDO, String password) {
 
         if (null == userDO ||
                 null != userMapper.getByUsername(userDO.getUsername()) ||
                 null != userMapper.getByPhone(userDO.getPhone())) {
             return null;
         }
-        return userMapper.insert(userDO);
+        if (1 == userMapper.insert(userDO)) {
+            return userMapper.updatePassword(userDO.getUid(), password);
+        }
+        return 0;
     }
 
     @Override

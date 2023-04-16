@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@TableName("roles")
+@TableName("role")
 public class RoleDO {
     public static final String MEMBER = "默认成员";
     public static final String APPLICANT = "默认访客";

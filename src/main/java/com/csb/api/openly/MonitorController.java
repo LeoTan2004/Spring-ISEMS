@@ -12,7 +12,6 @@ import com.csb.utils.Assert;
 import com.csb.utils.SessionUtils;
 import com.csb.vo.MSG;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +41,7 @@ public class MonitorController {
         if (Assert.isNull(roleDO) || !roleDO.checkPermission(PermissionEnum.PERMISSION_READ_MONITOR))
             return MSG.MSG_ILLEGAL_AUTHORITY;
         List<MonitorDO> monitorDOS = monitorService.listByTeam(tid, offset);
-        if (Assert.isNull(monitorDOS)) return MSG.MSG_FAIL;
+        if (Assert.isNull(monitorDOS)) return MSG.MSG_ERROR;
         return MSG.getMsgSuccessWithData(monitorDOS);
 
     }

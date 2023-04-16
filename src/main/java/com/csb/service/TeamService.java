@@ -1,7 +1,7 @@
 package com.csb.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.csb.dto.TeamCreateDTO;
+import com.csb.dto.TeamDTO;
 import com.csb.module.authority.UserDO;
 import com.csb.module.monitor.MonitorDO;
 import com.csb.module.team.TeamDO;
@@ -9,7 +9,7 @@ import com.csb.module.team.TeamDO;
 import java.util.List;
 
 public interface TeamService extends IService<TeamDO> {
-    Boolean createTeam(TeamCreateDTO param);
+    Boolean createTeam(TeamDTO param);
 
     Boolean deleteTeam(TeamDO teamDO);
 

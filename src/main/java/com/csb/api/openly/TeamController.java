@@ -3,6 +3,7 @@ package com.csb.api.openly;
 import com.csb.module.authority.UserDO;
 import com.csb.module.role.PermissionEnum;
 import com.csb.module.role.RoleDO;
+import com.csb.module.team.TeamDO;
 import com.csb.service.RoleService;
 import com.csb.service.TeamService;
 import com.csb.service.UserService;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -55,6 +57,17 @@ public class TeamController {
         UserDO curUser = SessionUtils.getCurUser(request.getSession());
         if (Assert.isNull(curUser)) return MSG.MSG_ILLEGAL_AUTHORITY;
         return teamService.quitTeam(curUser.getUid(), tid) ? MSG.MSG_SUCCESS : MSG.MSG_FAIL;
+    }
+
+    @PostMapping("/getTeams")
+    public MSG listTeamsByUser(@RequestParam(value = "offset", defaultValue = "0", required = false) long offset,
+                              HttpServletRequest request) {
+        UserDO user = SessionUtils.getCurUser(request.getSession());
+        if (Assert.isNull(user)) return MSG.MSG_ILLEGAL_AUTHORITY;
+        List<TeamDO> teams = teamService.listByUser(user, offset);
+        if (Assert.isNull(teams)) return MSG.MSG_FAIL;
+        return MSG.getMsgSuccessWithData(teams);
+
     }
 
 }

@@ -47,4 +47,12 @@ public class AccountController {
         UserInfoDO userInfo = userInfoDTO.toUserInfo(curUser.getUid());
         return accountService.updateById(userInfo) ? MSG.MSG_SUCCESS : MSG.MSG_FAIL;
     }
+
+    @PostMapping("/getAccount")
+    public MSG getAccount(@RequestParam(value = "uid",required = true) Long uid) {
+        if (Assert.isNull(uid))return MSG.MSG_ILLEGAL_PARAM;
+        UserInfoDO userInfoDO = accountService.getById(uid);
+        if (Assert.isNull(userInfoDO))return MSG.MSG_ILLEGAL_PARAM;
+        return MSG.getMsgSuccessWithData(userInfoDO);
+    }
 }

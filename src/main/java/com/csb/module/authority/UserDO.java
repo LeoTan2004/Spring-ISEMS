@@ -15,13 +15,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@TableName("users")
+@TableName("user")
 public class UserDO {
     @TableId(type = IdType.ASSIGN_ID)
     private Long uid;
     private String username;
-    @TableField(exist = false)
-    private String password;
     private Long phone;
     private String email;
     private Date lastLoginTime;

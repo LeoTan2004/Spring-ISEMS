@@ -1,5 +1,6 @@
 package com.csb.module.role;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
@@ -30,4 +31,9 @@ public interface RoleMapper extends BaseMapper<RoleDO> {
     @Delete("delete from monitor_system.role where rel_tid = #{tid};")
     Integer deleteByRelTid(@Param("tid") Long tid);
 
+    @Delete("delete from monitor_system.team_user where rel_rid = #{rid};")
+    Integer clearLinksByRid(@Param("tid") Long tid);
+
+    @Delete("delete from monitor_system.team_user where rel_uid = #{uid};")
+    Integer clearLinksByUid(@Param("uid") Long uid);
 }

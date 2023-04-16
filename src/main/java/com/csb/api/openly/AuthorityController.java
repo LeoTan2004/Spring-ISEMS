@@ -41,13 +41,14 @@ public class AuthorityController {
     public MSG register(RegisterDTO registerDTO, HttpServletRequest request) {
         if (Assert.isNull(registerDTO)) return MSG.MSG_ILLEGAL_PARAM;
         UserDO userDO = null;
-        if (!registerDTO.checkCap(request.getSession()))return MSG.MSG_ILLEGAL_CODE;
+        if (!registerDTO.checkCap(request.getSession())) return MSG.MSG_ILLEGAL_CODE;
         try {
             userDO = registerDTO.toUserDO();
         } catch (IllegalParamException e) {
             return MSG.MSG_ILLEGAL_PARAM;
         }
-        return 1 == userService.register(userDO)?MSG.MSG_SUCCESS:MSG.MSG_FAIL;
+        Integer register = userService.register(userDO,registerDTO.password());
+        return null != register && 1 == register ? MSG.MSG_SUCCESS : MSG.MSG_FAIL;
     }
 
     @RequestMapping("/getIMG")
@@ -60,13 +61,13 @@ public class AuthorityController {
     }
 
     @RequestMapping("/logout")
-    public MSG logout(HttpServletRequest request){
+    public MSG logout(HttpServletRequest request) {
         SessionUtils.clearSession(request.getSession());
         return MSG.MSG_SUCCESS;
     }
 
     @RequestMapping("/connectionTest")
-    public MSG connectionTest(){
+    public MSG connectionTest() {
         return MSG.MSG_SUCCESS;
     }
 }
